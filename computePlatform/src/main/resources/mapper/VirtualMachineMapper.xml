@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdilab.mapper.VirtualMachineMapper" >
+  <resultMap id="BaseResultMap" type="com.bdilab.model.VirtualMachine" >
+    <constructor >
+      <idArg column="virtual_machine_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="cpu" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="mem" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="disk" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="host_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ip" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cluster_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="modify_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="deleted" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="openstack_instance_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="openstack_ip_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    virtual_machine_id, cpu, mem, disk, host_name, ip, username, password, cluster_id, 
+    create_time, modify_time, creator, modifier, deleted, openstack_instance_id, openstack_ip_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from virtual_machine
+    where virtual_machine_id = #{virtualMachineId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByClusterId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from virtual_machine
+    where cluster_id = #{clusterId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from virtual_machine
+    where virtual_machine_id = #{virtualMachineId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bdilab.model.VirtualMachine" >
+    insert into virtual_machine (virtual_machine_id, cpu, mem, 
+      disk, host_name, ip, 
+      username, password, cluster_id, 
+      create_time, modify_time, creator, 
+      modifier, deleted, openstack_instance_id, 
+      openstack_ip_id)
+    values (#{virtualMachineId,jdbcType=BIGINT}, #{cpu,jdbcType=INTEGER}, #{mem,jdbcType=INTEGER}, 
+      #{disk,jdbcType=INTEGER}, #{hostName,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{clusterId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
+      #{modifier,jdbcType=VARCHAR}, #{deleted,jdbcType=INTEGER}, #{openstackInstanceId,jdbcType=VARCHAR}, 
+      #{openstackIpId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdilab.model.VirtualMachine" >
+    insert into virtual_machine
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="virtualMachineId != null" >
+        virtual_machine_id,
+      </if>
+      <if test="cpu != null" >
+        cpu,
+      </if>
+      <if test="mem != null" >
+        mem,
+      </if>
+      <if test="disk != null" >
+        disk,
+      </if>
+      <if test="hostName != null" >
+        host_name,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="clusterId != null" >
+        cluster_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+      <if test="openstackInstanceId != null" >
+        openstack_instance_id,
+      </if>
+      <if test="openstackIpId != null" >
+        openstack_ip_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="virtualMachineId != null" >
+        #{virtualMachineId,jdbcType=BIGINT},
+      </if>
+      <if test="cpu != null" >
+        #{cpu,jdbcType=INTEGER},
+      </if>
+      <if test="mem != null" >
+        #{mem,jdbcType=INTEGER},
+      </if>
+      <if test="disk != null" >
+        #{disk,jdbcType=INTEGER},
+      </if>
+      <if test="hostName != null" >
+        #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterId != null" >
+        #{clusterId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="openstackInstanceId != null" >
+        #{openstackInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="openstackIpId != null" >
+        #{openstackIpId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdilab.model.VirtualMachine" >
+    update virtual_machine
+    <set >
+      <if test="cpu != null" >
+        cpu = #{cpu,jdbcType=INTEGER},
+      </if>
+      <if test="mem != null" >
+        mem = #{mem,jdbcType=INTEGER},
+      </if>
+      <if test="disk != null" >
+        disk = #{disk,jdbcType=INTEGER},
+      </if>
+      <if test="hostName != null" >
+        host_name = #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterId != null" >
+        cluster_id = #{clusterId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="openstackInstanceId != null" >
+        openstack_instance_id = #{openstackInstanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="openstackIpId != null" >
+        openstack_ip_id = #{openstackIpId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where virtual_machine_id = #{virtualMachineId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdilab.model.VirtualMachine" >
+    update virtual_machine
+    set cpu = #{cpu,jdbcType=INTEGER},
+      mem = #{mem,jdbcType=INTEGER},
+      disk = #{disk,jdbcType=INTEGER},
+      host_name = #{hostName,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      cluster_id = #{clusterId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=INTEGER},
+      openstack_instance_id = #{openstackInstanceId,jdbcType=VARCHAR},
+      openstack_ip_id = #{openstackIpId,jdbcType=VARCHAR}
+    where virtual_machine_id = #{virtualMachineId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByClusterIdAndHostName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from virtual_machine
+    where cluster_id = #{clusterId,jdbcType=BIGINT}
+    and host_name = #{hostName,jdbcType=VARCHAR}
+    and deleted = 0;
+  </select>
+</mapper>

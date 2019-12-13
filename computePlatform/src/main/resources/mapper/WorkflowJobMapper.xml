@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdilab.mapper.WorkflowJobMapper" >
+  <resultMap id="BaseResultMap" type="com.bdilab.model.JobInfo.WorkflowJob" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="workflow_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="app_path" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.bdilab.model.JobInfo.WorkflowJobWithBLOBs" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="workflow_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="app_path" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="graph" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="job_xml" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="job_properties" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="resource_path" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, workflow_name, job_id, app_path
+  </sql>
+  <sql id="Blob_Column_List" >
+    graph, job_xml, job_properties, resource_path
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from workflow_job
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllWorkflow" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from workflow_job
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from workflow_job
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bdilab.model.JobInfo.WorkflowJobWithBLOBs" useGeneratedKeys="true" keyProperty="id">
+    insert into workflow_job (id, workflow_name, job_id, 
+      app_path, graph, job_xml, 
+      job_properties, resource_path)
+    values (#{id,jdbcType=INTEGER}, #{workflowName,jdbcType=VARCHAR}, #{jobId,jdbcType=VARCHAR}, 
+      #{appPath,jdbcType=VARCHAR}, #{graph,jdbcType=LONGVARCHAR}, #{jobXml,jdbcType=LONGVARCHAR}, 
+      #{jobProperties,jdbcType=LONGVARCHAR}, #{resourcePath,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdilab.model.JobInfo.WorkflowJobWithBLOBs" useGeneratedKeys="true" keyProperty="id">
+    insert into workflow_job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="workflowName != null" >
+        workflow_name,
+      </if>
+      <if test="jobId != null" >
+        job_id,
+      </if>
+      <if test="appPath != null" >
+        app_path,
+      </if>
+      <if test="graph != null" >
+        graph,
+      </if>
+      <if test="jobXml != null" >
+        job_xml,
+      </if>
+      <if test="jobProperties != null" >
+        job_properties,
+      </if>
+      <if test="resourcePath != null" >
+        resource_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workflowName != null" >
+        #{workflowName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobId != null" >
+        #{jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="appPath != null" >
+        #{appPath,jdbcType=VARCHAR},
+      </if>
+      <if test="graph != null" >
+        #{graph,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="jobXml != null" >
+        #{jobXml,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="jobProperties != null" >
+        #{jobProperties,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="resourcePath != null" >
+        #{resourcePath,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdilab.model.JobInfo.WorkflowJobWithBLOBs" >
+    update workflow_job
+    <set >
+      <if test="workflowName != null" >
+        workflow_name = #{workflowName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobId != null" >
+        job_id = #{jobId,jdbcType=VARCHAR},
+      </if>
+      <if test="appPath != null" >
+        app_path = #{appPath,jdbcType=VARCHAR},
+      </if>
+      <if test="graph != null" >
+        graph = #{graph,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="jobXml != null" >
+        job_xml = #{jobXml,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="jobProperties != null" >
+        job_properties = #{jobProperties,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="resourcePath != null" >
+        resource_path = #{resourcePath,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bdilab.model.JobInfo.WorkflowJobWithBLOBs" >
+    update workflow_job
+    set workflow_name = #{workflowName,jdbcType=VARCHAR},
+      job_id = #{jobId,jdbcType=VARCHAR},
+      app_path = #{appPath,jdbcType=VARCHAR},
+      graph = #{graph,jdbcType=LONGVARCHAR},
+      job_xml = #{jobXml,jdbcType=LONGVARCHAR},
+      job_properties = #{jobProperties,jdbcType=LONGVARCHAR},
+      resource_path = #{resourcePath,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdilab.model.JobInfo.WorkflowJob" >
+    update workflow_job
+    set workflow_name = #{workflowName,jdbcType=VARCHAR},
+      job_id = #{jobId,jdbcType=VARCHAR},
+      app_path = #{appPath,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
